@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A guide for coding with SQL">
+    <meta name="keywords" content="SQL, Coding Guide, Programming">
+    <meta name="author" content="Your Name">
+    <title>SQL Coding Guide</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-sql.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 80%;
+            margin: 0 auto;
+        }
+        header .logo {
+            height: 50px;
+        }
+        header nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+        header nav ul li {
+            display: inline;
+        }
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        main {
+            display: flex;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .left-column {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .right-column {
+            width: 300px;
+            flex-shrink: 0;
+        }
+        .search-box {
+            margin-bottom: 20px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .search-box input {
+            padding: 10px;
+            width: 80%;
+            max-width: 400px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .search-box button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        /* CSS for minimized and expanded states */
+        .code-block.minimized pre {
+            max-height: 50px; /* Adjust height as needed */
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .code-block.expanded pre {
+            max-height: none;
+            transition: max-height 0.3s ease;
+        }
+
+        .code-block {
+            background-color: #272822;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        /* Add a cursor pointer to indicate clickable elements */
+        .code-block-title {
+            cursor: pointer;
+        }
+        .edit-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: #ff9d00;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .copy-button {
+            background-color: #008CBA; /* Blue */
+            color: white;
+        }
+        .new-sql-form {
+            margin: 20px 0;
+        }
+        .new-sql-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .new-sql-form textarea, .new-sql-form input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: "Courier New", Courier, monospace;
+        }
+        .new-sql-form input[type="button"] {
+            padding: 10px 20px;
+            border: none;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        /* Popup modal styles */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            padding-top: 60px; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgb(0,0,0); 
+            background-color: rgba(0,0,0,0.4); 
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; 
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 5px;
+        }
+        .modal-close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .modal-close:hover,
+        .modal-close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .edit-sql-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .edit-sql-form textarea, .edit-sql-form input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: "Courier New", Courier, monospace;
+        }
+        .edit-sql-form input[type="button"] {
+            padding: 10px 20px;
+            border: none;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <img style="    width: 120px; height: 120px;" src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+            <h1>SQL Coding Guide</h1>
+            <nav>
+                <ul>
+                    <li><a href="#description">Description</a></li>
+                    <li><a href="#add-new">Add New</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="left-column">
+            <section>
+                <h2>Description</h2>
+                <p>This is where I use to store and search for commonly used SQL statements in the project. I will be happy if someone uses it to manage their sql. Thanks a lot !!!</p>
+            </section>
+
+            <section>
+                <h2>List SQL</h2>
+                <div class="search-box">
+                    <input type="text" id="searchInput" onkeyup="filterCodes()" placeholder="Search for SQL...">
+                    <button onclick="filterCodes()">Search</button>
+                </div>
+                <div id="sql-list">
+                    <!-- SQL code blocks will be appended here -->
+                </div>
+            </section>
+        </div>
+        
+        <div class="right-column">
+            <section id="add-new">
+                <h2>Add New SQL Code</h2>
+                <div class="new-sql-form">
+                    <label for="newSqlTitle">Title:</label>
+                    <input type="text" id="newSqlTitle" placeholder="Enter title for the SQL code">
+                    <label for="newSqlCode">SQL:</label>
+                    <textarea id="newSqlCode" placeholder="Write your SQL code here..."></textarea>
+                    <label for="newSqlKeywords">Keywords for search:</label>
+                    <input type="text" id="newSqlKeywords" placeholder="Enter keywords for the SQL code">
+                    <input type="button" value="Add SQL Code" onclick="addSqlCode()">
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Modal for editing SQL code -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h2>Edit SQL</h2>
+            <div class="edit-sql-form">
+                <input type="hidden" id="editSqlId">
+                <label for="editSqlTitle">Title:</label>
+                <input type="text" id="editSqlTitle" placeholder="Enter title for the SQL code">
+                <label for="editSqlCode">SQL:</label>
+                <textarea id="editSqlCode" placeholder="Write your SQL code here..."></textarea>
+                <label for="editSqlKeywords">Keywords for search:</label>
+                <input type="text" id="editSqlKeywords" placeholder="Enter keywords for the SQL code">
+                <input type="button" value="Save Changes" onclick="saveSqlCode()">
+            </div>
+        </div>
+    </div>
+
+    <script>
+          // Sample SQL data
+        let sqlEntries = [];
+
+        // Function to add a new SQL code entry
+        function addSqlCode() {
+            const title = document.getElementById('newSqlTitle').value.trim();
+            const code = document.getElementById('newSqlCode').value.trim();
+            const keywords = document.getElementById('newSqlKeywords').value.trim();
+            
+            if (!title || !code || !keywords) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            const data = {
+                title: title,
+                code: code,
+                keywords: keywords
+            };
+
+            fetch('/add_sql', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Add the new entry to the UI or perform any necessary actions
+                    console.log('New SQL code added:', data.entry);
+                    fetchAllSqlCodes(); // Refresh the SQL list
+                } else {
+                    alert('Failed to add SQL code');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to add SQL code');
+            });
+        }
+
+        // Update data
+        function saveSqlCode() {
+            let id = document.getElementById('editSqlId').value;
+            let title = document.getElementById('editSqlTitle').value.trim();
+            let code = document.getElementById('editSqlCode').value.trim();
+            let keywords = document.getElementById('editSqlKeywords').value.trim();
+
+            fetch('/update_sql', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id, title, code, keywords })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    fetchAllSqlCodes(); // Refresh the SQL list
+                    closeModal(); // Close modal after saving
+                } else {
+                    alert('Failed to save SQL code.');
+                }
+            })
+            .catch(error => console.error('Error saving SQL entry:', error));
+        }
+
+        // Function to delete an SQL code entry
+        function deleteSql(id) {
+            if (confirm('Are you sure you want to delete this SQL entry?')) {
+                const data = { id: id };
+                fetch('/delete_sql', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        fetchAllSqlCodes();
+                        // Remove the entry from the UI or perform any necessary actions
+                        console.log('SQL code deleted:', id);
+                    } else {
+                        alert('Failed to delete SQL code');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to delete SQL code');
+                });
+            }
+        }
+
+        // Search keyword
+        function filterCodes() {
+            let searchInput = document.getElementById('searchInput').value.toLowerCase();
+            // call API
+            fetch(`/search_sql?query=${searchInput}`)
+                .then(response => response.json())
+                .then(data => {
+                displayFilteredEntries(data);
+                })
+                .catch(error => console.error('Error fetching SQL entry:', error));
+        }
+
+        // Function to display filtered SQL entries
+        function displayFilteredEntries(data) {
+            let sqlList = document.getElementById('sql-list');
+                    sqlList.innerHTML = '';
+                    
+                    // Iterate through each SQL entry and create HTML elements
+                    data.forEach(code => {
+                        let codeBlock = document.createElement('div');
+                        codeBlock.classList.add('code-block', 'minimized');
+                        //codeBlock.className = 'code-block';
+                        codeBlock.innerHTML = `
+                            <h3 class="code-block-title" onclick="toggleCodeBlock(this)">${code.title}</h3>
+                            <pre><code class="language-sql">${code.code}</code></pre>
+                            <button onclick="openModal(${code.id})">Edit</button>
+                            <button onclick="deleteSql(${code.id})">Delete</button>
+                            <button class="copy-button" onclick="copyToClipboard(${code.id})">Copy</button>
+                        `;
+                        sqlList.appendChild(codeBlock);
+                    });
+
+
+            Prism.highlightAll();
+        }
+
+        function toggleCodeBlock(element) {
+            const codeBlock = element.parentElement;
+            codeBlock.classList.toggle('minimized');
+            codeBlock.classList.toggle('expanded');
+        }
+
+        // Function to open the modal with specific SQL entry data
+        function openModal(id) {
+            fetch(`/get_sql_entry?id=${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('SQL entry:', data); // Debugging: log fetched SQL entry
+
+                    // Populate modal fields with SQL entry data
+                    document.getElementById('editSqlId').value = data.id;
+                    document.getElementById('editSqlTitle').value = data.title;
+                    document.getElementById('editSqlCode').value = data.code;
+                    document.getElementById('editSqlKeywords').value = data.keywords;
+
+                    // Display the modal
+                    document.getElementById('editModal').style.display = 'block';
+                })
+                .catch(error => console.error('Error fetching SQL entry:', error));
+        }
+
+
+        function closeModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+
+        function fetchAllSqlCodes() {
+            fetch('/get_sql')
+                .then(response => response.json())
+                .then(data => {
+                    displayFilteredEntries(data.codes);
+                })
+                .catch(error => console.error('Error fetching SQL codes:', error));
+        }
+        // Fetch SQL codes on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchAllSqlCodes(); // Fetch SQL codes when the page loads
+        });
+
+        //Quick copy content
+        function copyToClipboard(id) {
+            fetch(`/get_sql_entry?id=${id}`)
+                .then(response => response.json())
+                .then(sqlEntry => {
+                    const text = sqlEntry.code;
+
+                    // Create a temporary textarea element to copy the text
+                    const tempTextArea = document.createElement('textarea');
+                    tempTextArea.value = text;
+                    document.body.appendChild(tempTextArea);
+                    tempTextArea.select();
+                    try {
+                        document.execCommand('copy');
+                        alert('SQL code copied to clipboard');
+                    } catch (err) {
+                        console.error('Error copying to clipboard:', err);
+                    }
+                    document.body.removeChild(tempTextArea);
+                })
+                .catch(error => console.error('Error fetching SQL entry:', error));
+        }
+
+    </script>
+</body>
+</html>
+    
