@@ -7,210 +7,12 @@
     <meta name="keywords" content="SQL, Coding Guide, Programming">
     <meta name="author" content="Your Name">
     <title>SQL Coding Guide</title>
-    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-sql.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        header {
-            background-color: #333;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        header .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 80%;
-            margin: 0 auto;
-        }
-        header .logo {
-            height: 50px;
-        }
-        header nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            gap: 20px;
-        }
-        header nav ul li {
-            display: inline;
-        }
-        header nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-        }
-        main {
-            display: flex;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .left-column {
-            flex: 1;
-            margin-right: 20px;
-        }
-        .right-column {
-            width: 300px;
-            flex-shrink: 0;
-        }
-        .search-box {
-            margin-bottom: 20px;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-        .search-box input {
-            padding: 10px;
-            width: 80%;
-            max-width: 400px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .search-box button {
-            padding: 10px 20px;
-            border: none;
-            background-color: #333;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        /* CSS for minimized and expanded states */
-        .code-block.minimized pre {
-            max-height: 50px; /* Adjust height as needed */
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .code-block.expanded pre {
-            max-height: none;
-            transition: max-height 0.3s ease;
-        }
-
-        .code-block {
-            background-color: #272822;
-            color: #f8f8f2;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-            margin-bottom: 20px;
-        }
-
-        /* Add a cursor pointer to indicate clickable elements */
-        .code-block-title {
-            cursor: pointer;
-        }
-        .edit-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 5px 10px;
-            background-color: #ff9d00;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 3px;
-        }
-        .copy-button {
-            background-color: #008CBA; /* Blue */
-            color: white;
-        }
-        .new-sql-form {
-            margin: 20px 0;
-        }
-        .new-sql-form label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        .new-sql-form textarea, .new-sql-form input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-family: "Courier New", Courier, monospace;
-        }
-        .new-sql-form input[type="button"] {
-            padding: 10px 20px;
-            border: none;
-            background-color: #333;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        /* Popup modal styles */
-        .modal {
-            display: none; 
-            position: fixed; 
-            z-index: 1; 
-            padding-top: 60px; 
-            left: 0;
-            top: 0;
-            width: 100%; 
-            height: 100%; 
-            overflow: auto; 
-            background-color: rgb(0,0,0); 
-            background-color: rgba(0,0,0,0.4); 
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto; 
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
-            border-radius: 5px;
-        }
-        .modal-close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .modal-close:hover,
-        .modal-close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .edit-sql-form label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        .edit-sql-form textarea, .edit-sql-form input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-family: "Courier New", Courier, monospace;
-        }
-        .edit-sql-form input[type="button"] {
-            padding: 10px 20px;
-            border: none;
-            background-color: #333;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <header>
@@ -396,28 +198,52 @@
                     
                     // Iterate through each SQL entry and create HTML elements
                     data.forEach(code => {
-                        let codeBlock = document.createElement('div');
-                        codeBlock.classList.add('code-block', 'minimized');
+                        const codeBlockContainer = document.createElement('div');
+                        codeBlockContainer.className = 'code-block-container';
+
+                        const codeBlockHeader = document.createElement('div');
+                        codeBlockHeader.className = 'code-block-header';
+                        codeBlockHeader.innerHTML = `
+                            <span class="code-block-title">${code.title}</span>
+                            <i class="arrow-icon fas fa-angle-down" onclick="toggleCodeBlock(this)"></i>
+                        `;
+
+                        let codeBlockContent = document.createElement('div');
+                        codeBlockContent.classList.add('code-block', 'minimized');
                         //codeBlock.className = 'code-block';
-                        codeBlock.innerHTML = `
-                            <h3 class="code-block-title" onclick="toggleCodeBlock(this)">${code.title}</h3>
+                        codeBlockContent.innerHTML = `
                             <pre><code class="language-sql">${code.code}</code></pre>
                             <button onclick="openModal(${code.id})">Edit</button>
                             <button onclick="deleteSql(${code.id})">Delete</button>
                             <button class="copy-button" onclick="copyToClipboard(${code.id})">Copy</button>
                         `;
-                        sqlList.appendChild(codeBlock);
+                        codeBlockContainer.appendChild(codeBlockHeader);
+                        codeBlockContainer.appendChild(codeBlockContent);
+                        sqlList.appendChild(codeBlockContainer);
                     });
 
 
             Prism.highlightAll();
         }
 
-        function toggleCodeBlock(element) {
-            const codeBlock = element.parentElement;
-            codeBlock.classList.toggle('minimized');
-            codeBlock.classList.toggle('expanded');
+        // function toggleCodeBlock(element) {
+        //     const codeBlock = element.parentElement;
+        //     codeBlock.classList.toggle('minimized');
+        //     codeBlock.classList.toggle('expanded');
+        // }
+
+        function toggleCodeBlock(icon) {
+        const content = icon.parentElement.nextElementSibling;
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            icon.classList.remove('fa-angle-up');
+            icon.classList.add('fa-angle-down');
+        } else {
+            content.classList.add('expanded');
+            icon.classList.remove('fa-angle-down');
+            icon.classList.add('fa-angle-up');
         }
+}
 
         // Function to open the modal with specific SQL entry data
         function openModal(id) {
