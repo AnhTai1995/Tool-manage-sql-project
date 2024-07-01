@@ -88,6 +88,11 @@ main {
     transition: max-height 0.3s ease;
 }
 
+.code-block pre.language-sql {
+    overflow-x: auto; /* Show a horizontal scrollbar if needed */
+    white-space: pre; /* Preserve whitespace */
+}
+
 .code-block {
     background-color: #272822;
     color: #f8f8f2;
@@ -182,11 +187,13 @@ main {
 }
 .edit-sql-form textarea, .edit-sql-form input[type="text"] {
     width: 100%;
+    height: 100px; /* Adjust the height as needed */
     padding: 10px;
-    margin-bottom: 10px;
+    margin: 5px 0 20px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-family: "Courier New", Courier, monospace;
+    resize: vertical; /* Allow users to resize the textarea vertically */
+    overflow-y: auto; /* Show a vertical scrollbar if needed */
 }
 .edit-sql-form input[type="button"] {
     padding: 10px 20px;
@@ -205,6 +212,8 @@ main {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    width: 80%;
+    max-width: 800px;
 }
 
 .code-block-header {
