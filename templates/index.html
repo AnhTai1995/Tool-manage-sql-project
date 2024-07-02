@@ -114,6 +114,10 @@
                 if (data.success) {
                     // Add the new entry to the UI or perform any necessary actions
                     console.log('New SQL code added:', data.entry);
+                    document.getElementById('newSqlTitle').value = "";
+                    document.getElementById('newSqlCode').value = "";
+                    document.getElementById('newSqlKeywords').value = "";
+                    alert('Add new sql success!');
                     fetchAllSqlCodes(); // Refresh the SQL list
                 } else {
                     alert('Failed to add SQL code');
