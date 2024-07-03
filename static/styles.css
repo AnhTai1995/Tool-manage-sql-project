@@ -241,3 +241,23 @@ main {
     color: #0056b3;
     margin: 0;
 }
+/* Back to Top button styling */
+.back-to-top-btn {
+    display: none; /* Hidden by default */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    font-size: 18px;
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.back-to-top-btn:hover {
+    background-color: #555;
+}

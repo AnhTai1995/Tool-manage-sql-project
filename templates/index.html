@@ -21,8 +21,8 @@
             <h1>SQL Coding Guide</h1>
             <nav>
                 <ul>
-                    <li><a href="#description">Description</a></li>
-                    <li><a href="#add-new">Add New</a></li>
+                    <li><a href="https://github.com/AnhTai1995">Github</a></li>
+                    <li><a href="https://www.linkedin.com/in/anh-tai-b04278119/">Linkedin</a></li>
                 </ul>
             </nav>
         </div>
@@ -80,6 +80,7 @@
             </div>
         </div>
     </div>
+    <button id="backToTopBtn" class="back-to-top-btn" title="Back to top">&uarr;</button>
 
     <script>
           // Sample SQL data
@@ -282,8 +283,28 @@
                 })
                 .catch(error => console.error('Error fetching SQL codes:', error));
         }
+
+        function setupBackToTopButton() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+
+        // Show or hide the button based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 200) { // Show the button after scrolling down 200px
+                backToTopBtn.style.display = 'block';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
+        });
+
+        // Scroll to the top when the button is clicked
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+}
+
         // Fetch SQL codes on page load
         document.addEventListener('DOMContentLoaded', function() {
+            setupBackToTopButton(); // Setup back to top button functionality
             fetchAllSqlCodes(); // Fetch SQL codes when the page loads
         });
 
